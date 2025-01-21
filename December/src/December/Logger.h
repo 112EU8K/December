@@ -5,34 +5,36 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include <memory>
 
+
+
+
 namespace December {
-    class Logger
+    class __declspec(dllexport) Logger
     {
         public:
-            DECEMBER_API static void init();
+            static void init();
 
-            DECEMBER_API inline static std::shared_ptr<spdlog::logger> &GetEngineLogger() { return EngineLogger; }
-            DECEMBER_API inline static std::shared_ptr<spdlog::logger> &GetClientLogger() { return ClientLogger; }
-        protected:
+            static void EngineTrace(const std::string &message);
+            static void EngineInfo(const std::string &message);
+            static void EngineWarn(const std::string &message);
+            static void EngineError(const std::string &message);
+            static void EngineFatal(const std::string &message);
 
+            static void ClientTrace(const std::string &message);
+            static void ClientInfo(const std::string &message);
+            static void ClientWarn(const std::string &message);
+            static void ClientError(const std::string &message);
+            static void ClientFatal(const std::string &message);
+
+            inline static std::shared_ptr<spdlog::logger> &GetEngineLogger() { return EngineLogger; }
+            inline static std::shared_ptr<spdlog::logger> &GetClientLogger() { return ClientLogger; }
         private:
-            static DECEMBER_API std::shared_ptr<spdlog::logger> EngineLogger;
-            static DECEMBER_API std::shared_ptr<spdlog::logger> ClientLogger;
+            static std::shared_ptr<spdlog::logger> EngineLogger;
+            static std::shared_ptr<spdlog::logger> ClientLogger;
     };
 }
 
-#define DECEMBER_ENGINE_TRACE    ::December::Logger:GetEngineLogger()->trace(__VA_ARGS__)
-#define DECEMBER_ENGINE_INFO      ::December::Logger:GetEngineLogger()->info(__VA_ARGS__)
-#define DECEMBER_ENGINE_WARN      ::December::Logger:GetEngineLogger()->warn(__VA_ARGS__)
-#define DECEMBER_ENGINE_ERROR    ::December::Logger:GetEngineLogger()->error(__VA_ARGS__)
-#define DECEMBER_ENGINE_FATAL    ::December::Logger:GetEngineLogger()->fatal(__VA_ARGS__)
-
-#define DECEMBER_TRACE           ::December::Logger:GetEngineLogger()->trace(__VA_ARGS__)
-#define DECEMBER_INFO             ::December::Logger:GetEngineLogger()->info(__VA_ARGS__)
-#define DECEMBER_WARN             ::December::Logger:GetEngineLogger()->warn(__VA_ARGS__)
-#define DECEMBER_ERROR           ::December::Logger:GetEngineLogger()->error(__VA_ARGS__)
-#define DECEMBER_FATAL           ::December::Logger:GetEngineLogger()->fatal(__VA_ARGS__)
-
 
 #endif // LOGGER_H
+
 
