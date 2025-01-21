@@ -1,19 +1,18 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
-#include <SFML/Graphics.hpp>
 
 namespace December
 {
-     class Application
+     class __declspec(dllexport) Application
     {
     public:
-        DECEMBER_API Application();
-        DECEMBER_API virtual ~Application();
-        DECEMBER_API void run();
+        Application() = default;
+        virtual ~Application() = default;
+        void run();
 
     };
 
-    DECEMBER_API Application* CreateApplication();
+    Application* CreateApplication();
 }
 
 #endif // APPLICATION_H
