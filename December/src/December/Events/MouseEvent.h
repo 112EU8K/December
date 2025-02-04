@@ -2,7 +2,7 @@
 #define MOUSEEVENT_H
 
 #include "Event.h"
-#include "MouseCodes.h"
+#include "Core/MouseCodes.h"
 
 namespace December {
 
@@ -12,8 +12,8 @@ namespace December {
 		MouseMovedEvent(const float x, const float y)
 			: MouseX(x), MouseY(y) {}
 
-		float GetX() const { return m_MouseX; }
-		float GetY() const { return m_MouseY; }
+		float GetX() const { return MouseX; }
+		float GetY() const { return MouseY; }
 
 		std::string ToString() const override
 		{
@@ -34,8 +34,8 @@ namespace December {
 		MouseScrolledEvent(const float xOffset, const float yOffset)
 			: XOffset(xOffset), YOffset(yOffset) {}
 
-		float GetXOffset() const { return m_XOffset; }
-		float GetYOffset() const { return m_YOffset; }
+		float GetXOffset() const { return XOffset; }
+		float GetYOffset() const { return YOffset; }
 
 		std::string ToString() const override
 		{
