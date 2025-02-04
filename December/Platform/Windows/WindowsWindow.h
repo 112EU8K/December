@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #include <Logger.h>
+#include <memory>
 
 namespace December {
     class WindowsWindow : public December::Window
@@ -22,14 +23,15 @@ namespace December {
             void SetVSync(bool enabled) override;
             bool IsVSync() const override;
 
+            void pollEvents();
 
-            sf::RenderWindow* GetNativeWindow() const { return window; }
+            sf::RenderWindow* GetNativeWindow() const { return window.get(); }
 
         protected:
             virtual void Init(const December::WindowProps& props);
             virtual void Shutdown();
         private:
-            sf::RenderWindow* window;
+            std::unique_ptr<sf::RenderWindow> window;
             sf::Event event;
 
             struct WindowData
