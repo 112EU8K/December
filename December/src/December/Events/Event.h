@@ -38,7 +38,7 @@ namespace December
     #define EVENT_CLASS_CATEGORY(category)\
     virtual int GetCategoryFlags() const override { return category; }
 
-    class __declspec(dllexport) Event
+    class Event
     {
         friend class EventDispatcher;
     public:
@@ -47,12 +47,14 @@ namespace December
         virtual int GetCategoryFlags() const = 0;
         virtual std::string ToString() const { return GetName(); }
 
+        bool Handled = false;
+
         inline bool IsInCategory(EventCategory category)
         {
             return GetCategoryFlags() & category;
         }
     protected:
-        bool Handled = false;
+
     };
 
 
