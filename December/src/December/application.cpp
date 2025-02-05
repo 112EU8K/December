@@ -20,15 +20,35 @@ namespace December
 
     };  // Define the destructor here
 
+    void Application::PushLayer(Layer *layer)
+    {
+        layer_stack.PushLayer(layer);
+    }
+
+    void Application::PushOverlayer(Layer *overlay)
+    {
+        layer_stack.PushOverlay(overlay);
+    }
+
     void Application::onEvent(Event &eve)
     {
         EventDispatcher dispatcher(eve);
         dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
         December::Logger::EngineInfo(eve.ToString());
+
+        for (auto it = layer_stack.end(); it != layer_stack.begin(); )
+        {
+            (*--it)->OnEvent(eve);
+            if (eve.Handled) break;
+
+        }
     }
 
     void Application::run() {
         while (running) {
+
+            for (Layer* layer : layer_stack) layer->OnUpdate();
+
             window->onUpdate();
 
             // Check if window is still open
